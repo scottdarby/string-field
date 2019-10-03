@@ -3,12 +3,14 @@
   "version": "0.0.1",
   "description": "String Field",
   "main": "build/index.js",
+  "homepage": "https://scottdarby.github.io/string-field/",
   "files": [
     "/build",
     "/src"
   ],
   "repository": {
-    "type": "git"
+    "type": "git",
+    "url": "https://scottdarby.github.io/string-field/"
   },
   "browserify": {
     "transform": [
