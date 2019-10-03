@@ -20,8 +20,7 @@ class MouseClass extends BaseClass {
     super.onMouseMove()
   }
 
-  renderFrame ({ clock } = {}) {
-    const dt = clock.getDelta()
+  renderFrame ({ dt } = {}) {
     this.smoothedMousePos.x = lerp(this.smoothedMousePos.x, this.mousePos.x, dt * 0.1)
     this.smoothedMousePos.y = lerp(this.smoothedMousePos.y, this.mousePos.y, dt * 0.1)
 

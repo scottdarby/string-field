@@ -12,6 +12,7 @@ import {
 import BaseClass from './BaseClass'
 import SceneClass from './SceneClass'
 import MouseClass from './MouseClass'
+import TouchClass from './TouchClass'
 
 import PassThroughVert from '../shaders/passThrough.vert'
 // import PassThroughFrag from '../shaders/passThrough.frag'
@@ -93,7 +94,13 @@ class FBOClass extends BaseClass {
 
   renderFrame ({ clock } = {}) {
     this.material.uniforms.uTime.value = clock.getElapsedTime()
-    this.material.uniforms.uMousePos.value = MouseClass.getInstance().smoothedMousePos
+
+    if (this.config.detector.isMobile) {
+      this.material.uniforms.uMousePos.value = TouchClass.getInstance().smoothedTouchPos
+    } else {
+      this.material.uniforms.uMousePos.value = MouseClass.getInstance().smoothedMousePos
+    }
+
     super.renderFrame()
   }
 }

@@ -37,6 +37,7 @@ import ControlsClass from './classes/ControlsClass'
 import QuadCameraClass from './classes/QuadCameraClass'
 import FBOClass from './classes/FBOClass'
 import MouseClass from './classes/MouseClass'
+import TouchClass from './classes/TouchClass'
 
 /*------------------------------------------
 Styles
@@ -62,6 +63,7 @@ class Main extends mixin(EventEmitter, Component) {
     ControlsClass.getInstance().init()
     QuadCameraClass.getInstance().init()
     MouseClass.getInstance().init()
+    TouchClass.getInstance().init()
     FBOClass.getInstance().init({
       width: window.innerWidth,
       height: window.innerHeight,
@@ -120,17 +122,14 @@ class Main extends mixin(EventEmitter, Component) {
 
   renderFrame () {
 
+    const dt = this.clock.getDelta()
+
     TWEEN.update()
 
-    MouseClass.getInstance().renderFrame({
-      clock: this.clock
-    })
-
-    ControlsClass.getInstance().renderFrame()
-    
-    FBOClass.getInstance().renderFrame({
-      clock: this.clock
-    })
+    MouseClass.getInstance().renderFrame({dt: dt})
+    TouchClass.getInstance().renderFrame({dt: dt})
+    ControlsClass.getInstance().renderFrame({dt: dt})
+    FBOClass.getInstance().renderFrame({clock: this.clock})
 
     if (this.config.post.enabled) {
       this.composer.render()
@@ -144,12 +143,15 @@ class Main extends mixin(EventEmitter, Component) {
   addEvents () {
     window.addEventListener('resize', this.resize.bind(this), false)
     this.resize()
+
     RendererClass.getInstance().renderer.domElement.addEventListener('mousemove', (e) => {
       MouseClass.getInstance().onMouseMove(e)
     }, false)
-  }
 
-  
+    RendererClass.getInstance().renderer.domElement.addEventListener('touchmove', (e) => {
+      TouchClass.getInstance().onTouchMove(e)
+    }, false)
+  }
 
   resize () {
     this.width = window.innerWidth

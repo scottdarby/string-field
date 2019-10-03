@@ -42,6 +42,7 @@ class Config {
       dev: {
         debugPicker: false
       },
+      detector: Detector,
       floatType: Detector.isIOS ? HalfFloatType : FloatType
     }
   }
